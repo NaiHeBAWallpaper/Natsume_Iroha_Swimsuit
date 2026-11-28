@@ -49,7 +49,8 @@ const subtitleLocales = {
 	Chinese: 'zh-Hans',
 	TraditionalChinese: 'zh-Hant',
 	Japanese: 'ja',
-	Korean: 'ko'
+	Korean: 'ko',
+	Thai: 'th'
 };
 let isVoicelinePlaying = false;
 
@@ -67,21 +68,22 @@ const AUDIO_DETAIL = [
                 "怒らないでください。かわいいイタズラじゃないですか。"
             ],
             English: [
-                "Fufu. What a wonderful expression you're making.",
-                "Please don't be mad. It's just a cute little prank, isn't it?"
+                "Fufu, you're making a funny face.",
+                "Don't be mad at me. It was just a joke."
             ],
             Chinese: [
                 "呵呵，表情真棒呢。",
                 "请别生气嘛，这不是挺可爱的恶作剧吗？"
             ],
             TraditionalChinese: [
-                "呵呵，表情真棒呢。",
-                "請別生氣嘛，這不是挺可愛的惡作劇嗎？"
+                "呵呵。真是個好表情。",
+                "請不要生氣。這只是個可愛的惡作劇嘛。"
             ],
             Korean: [
-                "젠장, 정말 멋진 표현이야",
-                "화가 나지 마, 귀여운 농담이야"
-            ]
+                "후훗, 우스운 표정.",
+                "화내지 마세요. 그냥 장난이니까."
+            ],
+            Thai: ["ฮุฮุ ทำหน้าตลกจัง","อย่าโกรธสิคะ ฉันแค่แกล้งเล่นเอง"]
         }
     },
     {
@@ -91,21 +93,22 @@ const AUDIO_DETAIL = [
                 "まだ昼の熱が残っていて……。"
             ],
             English: [
-                "The sand is nice and warm, isn't it?",
-                "It still holds the heat from daytime..."
+                "The sand is so warm.",
+                "I can feel the leftover heat from the sun..."
             ],
             Chinese: [
                 "沙子很温暖呢。",
                 "还残留着白天的余温……"
             ],
             TraditionalChinese: [
-                "沙子很溫暖呢。",
-                "還殘留著白天的餘溫……"
+                "沙子，暖呼呼的呢。",
+                "還殘留著白天的熱度……"
             ],
             Korean: [
-                "모래는 따뜻하고 멋지죠?",
-                "아직 낮의 열기가 남아 있어서……."
-            ]
+                "모래, 따끈따끈하네요.",
+                "아직 햇살의 온기가 남아 있어서……."
+            ],
+            Thai: ["ทรายอุ่นๆ เลยนะคะ","เพราะยังมีไออุ่นของแดด หลงเหลืออยู่..."]
         }
     },
     {
@@ -115,21 +118,22 @@ const AUDIO_DETAIL = [
                 "先生も？……そうですか。"
             ],
             English: [
-                "...I had a lot of fun today.",
-                "You too, Sensei? ...I see."
+                "Today was really fun.",
+                "What about you? ...Did you have fun too?"
             ],
             Chinese: [
                 "……今天一整天，我都过得很开心。",
                 "老师也是吗？……这样啊。"
             ],
             TraditionalChinese: [
-                "……今天一整天，我都過得很開心。",
-                "老師也是嗎？……這樣啊。"
+                "……今天一整天，我過得很開心。",
+                "老師也是？……這樣啊。"
             ],
             Korean: [
-                "오늘 정말 재미있었어요",
-                "너도, 선생님?"
-            ]
+                "……오늘 하루, 제법 즐거웠지요.",
+                "선생님도? ……같으신가요."
+            ],
+            Thai: ["วันนี้ทั้งวัน... สนุกไม่ใช่เล่นเลยนะคะ","คุณครูก็? รู้สึกเหมือนกันมั้ยคะ..."]
         }
     },
     {
@@ -138,17 +142,18 @@ const AUDIO_DETAIL = [
                 "それならいっそ……帰るの、やめません？"
             ],
             English: [
-                "In that case... why don't we just not go back?"
+                "Should we just...not go back?"
             ],
             Chinese: [
                 "既然如此……干脆，我们今晚别回去了吧？"
             ],
             TraditionalChinese: [
-                "既然如此……乾脆，我們今晚別回去了吧？"
+                "既然如此……乾脆別回去了？"
             ],
             Korean: [
-                "그럼... 왜 그냥 돌아가지 않을까요?"
-            ]
+                "차라리 이대로…… 돌아가지 말까요?"
+            ],
+            Thai: ["ถ้างั้นเรา... ไม่กลับกันดีมั้ยคะ?"]
         }
     },
     {
@@ -157,17 +162,18 @@ const AUDIO_DETAIL = [
                 "このまま、どこか遠くへ……なんて。"
             ],
             English: [
-                "Just like this, to somewhere far away... or something like that."
+                "Should we run away together? That sounds nice... Somewhere far, far away."
             ],
             Chinese: [
                 "就这么去个遥远的地方……开玩笑的。"
             ],
             TraditionalChinese: [
-                "就這麼去個遙遠的地方……開玩笑的。"
+                "就這樣，到某個遠方……之類的。"
             ],
             Korean: [
-                "이렇게, 멀리 떨어진 곳으로..."
-            ]
+                "떠날까요? 그러면 좋을 텐데…… 저 멀리."
+            ],
+            Thai: ["ออกเดินทางกันมั้ยคะ? อยากให้เป็นแบบนั้นจัง... ได้ไปที่ไกลๆ"]
         }
     }
 ];
@@ -293,7 +299,7 @@ function playVoiceline() {
 			track.play().catch(finish);
 
 			if (dialogBox) {
-				textbox.textContent = dialog[window.selectedLanguage][index];
+				textbox.textContent = getSubtitleText(dialog, window.selectedLanguage, index);
 				textbox.style.opacity = 1;
 			}
 		},
@@ -469,6 +475,16 @@ function setMouse(event) {
 	return { x: ax - canvas.width * positionX, y: ay - canvas.height * positionY };
 }
 
+function getSubtitleText(dialog, language, index) {
+	let text = dialog?.[language]?.[index];
+	if (text == null && language === 'Thai') {
+		language = 'English';
+		text = dialog?.[language]?.[index];
+	}
+	textbox.lang = subtitleLocales[language];
+	return text ?? "";
+}
+
 function updateSubtitleLanguage() {
 	let language = subtitleLanguagePreference;
 	if (language === 'auto') {
@@ -482,6 +498,8 @@ function updateSubtitleLanguage() {
 			language = 'Japanese';
 		} else if (primary === 'ko' || primary === 'korean' || primary === 'koreana') {
 			language = 'Korean';
+		} else if (primary === 'th' || primary === 'thai') {
+			language = 'Thai';
 		} else {
 			language = 'English';
 		}
@@ -491,7 +509,7 @@ function updateSubtitleLanguage() {
 	window.selectedLanguage = language;
 	textbox.lang = subtitleLocales[language];
 	const clip = currentTracks.at(-1);
-	if (dialogBox && clip) textbox.textContent = clip.dialog[language][clip.index];
+	if (dialogBox && clip) textbox.textContent = getSubtitleText(clip.dialog, language, clip.index);
 }
 
 function init() {
